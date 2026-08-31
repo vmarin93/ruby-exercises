@@ -1,3 +1,6 @@
 source "https://rubygems.org"
 
-gem "ruby-lsp", group: :development
+group :development do
+  gem "ruby-lsp"
+  gem "debug"
+end
