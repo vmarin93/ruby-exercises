@@ -8,6 +8,6 @@
     "adapter": "rdbg",
     "request": "launch",
     "script": "$ZED_FILE",
-    "cwd": "$ZED_WORKTREE_ROOT",
-  },
+    "cwd": "$ZED_WORKTREE_ROOT"
+  }
 ]
