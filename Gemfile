@@ -1,6 +1,6 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 group :development do
-  gem "ruby-lsp"
-  gem "debug"
+  gem 'debug'
+  gem 'solograph'
 end
