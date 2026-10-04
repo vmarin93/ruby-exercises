@@ -20,9 +20,9 @@ class Board
     # pass
   end
 
-  sig { returns(NilClass) }
+  sig { returns(T::Boolean) }
   def full?
-    # pass
+    board.flatten.none?(&:nil?)
   end
 
   sig { returns(NilClass) }

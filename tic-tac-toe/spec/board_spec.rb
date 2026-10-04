@@ -45,4 +45,17 @@ RSpec.describe Board do
       expect(board.board[0][0]).to eq(Move::X)
     end
   end
+
+  describe '#full?' do
+    subject(:board) { described_class.new }
+    it 'returns false when board is empty' do
+      expect(board.full?).to be(false)
+    end
+
+    it 'returns true when board is full' do
+      (1..9).each { |i| board.add_move(Move::X, i) }
+
+      expect(board.full?).to be(true)
+    end
+  end
 end
