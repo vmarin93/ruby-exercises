@@ -48,7 +48,14 @@ RSpec.describe Board do
 
   describe '#full?' do
     subject(:board) { described_class.new }
+
     it 'returns false when board is empty' do
+      expect(board.full?).to be(false)
+    end
+
+    it 'returns false when board is almost full' do
+      (1..6).each { |i| board.add_move(Move::X, i) }
+
       expect(board.full?).to be(false)
     end
 
@@ -56,6 +63,22 @@ RSpec.describe Board do
       (1..9).each { |i| board.add_move(Move::X, i) }
 
       expect(board.full?).to be(true)
+    end
+  end
+
+  describe '#clear!' do
+    subject(:board) { described_class.new }
+
+    it 'resets the board state to have all cells be nil' do
+      (1..9).each { |i| board.add_move(Move::X, i) }
+      board.clear!
+
+      expect(board.board).to eq(fresh_board)
+    end
+
+    it 'works safely on already empty board' do
+      expect { board.clear! }.not_to raise_error
+      expect(board.board).to eq(fresh_board)
     end
   end
 end

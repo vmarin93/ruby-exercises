@@ -15,9 +15,9 @@ class Board
     @board = T.let(Array.new(3) { Array.new(3) }, T::Array[T::Array[T.nilable(Move)]])
   end
 
-  sig { returns(NilClass) }
+  sig { returns(T::Array[T::Array[T.nilable(Move)]]) }
   def clear!
-    # pass
+    board.each { |row| row.fill(nil) }
   end
 
   sig { returns(T::Boolean) }
