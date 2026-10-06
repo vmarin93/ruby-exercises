@@ -49,6 +49,12 @@ RSpec.describe Board do
   describe '#full?' do
     subject(:board) { described_class.new }
 
+    it 'returns true when board is full' do
+      (1..9).each { |i| board.add_move(Move::X, i) }
+
+      expect(board.full?).to be(true)
+    end
+
     it 'returns false when board is empty' do
       expect(board.full?).to be(false)
     end
@@ -57,12 +63,6 @@ RSpec.describe Board do
       (1..6).each { |i| board.add_move(Move::X, i) }
 
       expect(board.full?).to be(false)
-    end
-
-    it 'returns true when board is full' do
-      (1..9).each { |i| board.add_move(Move::X, i) }
-
-      expect(board.full?).to be(true)
     end
   end
 
@@ -79,6 +79,44 @@ RSpec.describe Board do
     it 'works safely on already empty board' do
       expect { board.clear! }.not_to raise_error
       expect(board.board).to eq(fresh_board)
+    end
+  end
+
+  describe '#strike' do
+    subject(:board) { described_class.new }
+
+    it 'finds strike on rows' do
+      (1..3).each { |i| board.add_move(Move::X, i) }
+
+      expect(board.strike?).to be(true)
+    end
+
+    it 'finds strike on columns' do
+      [1, 4, 7].each { |i| board.add_move(Move::O, i) }
+
+      expect(board.strike?).to be(true)
+    end
+
+    it 'finds strike on top-left to bottom-right diagonal' do
+      [1, 5, 9].each { |i| board.add_move(Move::X, i) }
+
+      expect(board.strike?).to be(true)
+    end
+
+    it 'finds strike on top-right to bottom-left diagonal' do
+      [3, 5, 7].each { |i| board.add_move(Move::X, i) }
+
+      expect(board.strike?).to be(true)
+    end
+
+    it 'returns false if no strike is found' do
+      expect(board.strike?).to be(false)
+    end
+
+    it 'returns false when line is full but no strike' do
+      board.add_move(Move::X, 1)
+      board.add_move(Move::O, 1)
+      board.add_move(Move::X, 1)
     end
   end
 end

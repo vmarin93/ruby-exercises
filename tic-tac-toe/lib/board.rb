@@ -25,9 +25,13 @@ class Board
     board.flatten.none?(&:nil?)
   end
 
-  sig { returns(NilClass) }
+  sig { returns(T::Boolean) }
   def strike?
-    # pass
+    winning_lines = board + board.transpose + diagonals
+
+    winning_lines.any? do |line|
+      line.none?(&:nil?) && line.uniq.size == 1
+    end
   end
 
   sig do
@@ -55,5 +59,17 @@ class Board
     col = (index - 1) % 3
 
     T.must(board[row])[col].nil?
+  end
+
+  sig { returns(T::Array[T::Array[T.nilable(Move)]]) }
+  def diagonals
+    r0 = T.must(board[0])
+    r1 = T.must(board[1])
+    r2 = T.must(board[2])
+
+    [
+      [r0[0], r1[1], r2[2]],
+      [r0[2], r1[1], r2[0]]
+    ]
   end
 end
