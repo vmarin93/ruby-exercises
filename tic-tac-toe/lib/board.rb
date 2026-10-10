@@ -3,7 +3,7 @@
 
 require_relative 'move'
 
-# Defines the nested array that will hold all the positions on the board as strings
+# Defines the Board. The board is a 3x3 grid to which we can add_move, clear!, check for strike? or check if full?
 class Board
   extend T::Sig
 
