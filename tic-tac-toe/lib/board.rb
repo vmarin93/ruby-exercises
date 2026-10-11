@@ -35,16 +35,16 @@ class Board
   end
 
   sig do
-    params(move: Move, index: Integer).returns(T::Boolean)
+    params(move: Move, index: Integer).returns(T.nilable(Move))
   end
   def add_move(move, index)
-    return false unless valid_move?(index)
+    return nil unless valid_move?(index)
 
     row = (index - 1) / 3
     col = (index - 1) % 3
 
     T.must(board[row])[col] = move
-    true
+    move
   end
 
   private
