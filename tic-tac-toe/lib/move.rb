@@ -7,4 +7,9 @@ class Move < T::Enum
     X = new('x')
     O = new('o')
   end
+
+  sig { returns Move }
+  def opposite
+    self == X ? O : X
+  end
 end
