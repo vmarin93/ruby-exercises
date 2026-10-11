@@ -1,0 +1,13 @@
+AllCops:
+  SuggestExtensions: false
+  NewCops: enable
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+    - '**/spec/**/*'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'spec/**/*'
+    - '**/spec/**/*'
