@@ -26,14 +26,14 @@ RSpec.describe Board do
     it 'adds a move on the board index is valid' do
       result = board.add_move(Move::X, 1)
 
-      expect(result).to be(true)
+      expect(result).to eq(Move::X)
       expect(board.board[0][0]).to eq(Move::X)
     end
 
     it 'does not add a move if index is invalid' do
       result = board.add_move(Move::X, 10)
 
-      expect(result).to be(false)
+      expect(result).to be_nil
       expect(board.board).to eq(fresh_board)
     end
 
@@ -41,7 +41,7 @@ RSpec.describe Board do
       board.add_move(Move::X, 1)
       result = board.add_move(Move::O, 1)
 
-      expect(result).to be(false)
+      expect(result).to be_nil
       expect(board.board[0][0]).to eq(Move::X)
     end
   end
@@ -115,8 +115,10 @@ RSpec.describe Board do
 
     it 'returns false when line is full but no strike' do
       board.add_move(Move::X, 1)
-      board.add_move(Move::O, 1)
-      board.add_move(Move::X, 1)
+      board.add_move(Move::O, 2)
+      board.add_move(Move::X, 3)
+
+      expect(board.strike?).to be(false)
     end
   end
 end
