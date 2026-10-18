@@ -1,6 +1,8 @@
 # typed: strict
 # frozen_string_literal: true
 
+require 'stringio'
+
 # Defines the UI interface, has methods to interact with the user via STDIN and STDOUT
 class UI
   extend T::Sig

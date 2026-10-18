@@ -34,6 +34,7 @@ class Game
   sig { void }
   def play
     set_players
+    display_players
   end
 
   private
@@ -44,6 +45,11 @@ class Game
                           move: ui.prompt_for_move('Choose a move for Player1: '))
     @player2 = Player.new(name: ui.prompt_for_player_name('Player2 name: '),
                           move: @player1.move.opposite)
-    ui.output.puts "Player #{@player2.name} was assigned move #{@player2.move.serialize}"
+  end
+
+  sig { void }
+  def display_players
+    ui.output.puts "| #{@player1&.name} plays for #{@player1&.move&.serialize} |"
+    ui.output.puts "| #{@player2&.name} plays for #{@player2&.move&.serialize} |"
   end
 end
