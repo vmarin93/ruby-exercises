@@ -16,7 +16,7 @@ RSpec.describe Board do
     subject(:board) { described_class.new }
 
     it 'creates a 3x3 grid with all cells set to nil' do
-      expect(board.board).to eq(fresh_board)
+      expect(board.grid).to eq(fresh_board)
     end
   end
 
@@ -27,14 +27,14 @@ RSpec.describe Board do
       result = board.add_move(Move::X, 1)
 
       expect(result).to eq(Move::X)
-      expect(board.board[0][0]).to eq(Move::X)
+      expect(board.grid[0][0]).to eq(Move::X)
     end
 
     it 'does not add a move if index is invalid' do
       result = board.add_move(Move::X, 10)
 
       expect(result).to be_nil
-      expect(board.board).to eq(fresh_board)
+      expect(board.grid).to eq(fresh_board)
     end
 
     it 'does not add a move if cell is occupied' do
@@ -42,7 +42,7 @@ RSpec.describe Board do
       result = board.add_move(Move::O, 1)
 
       expect(result).to be_nil
-      expect(board.board[0][0]).to eq(Move::X)
+      expect(board.grid[0][0]).to eq(Move::X)
     end
   end
 
@@ -73,12 +73,12 @@ RSpec.describe Board do
       (1..9).each { |i| board.add_move(Move::X, i) }
       board.clear!
 
-      expect(board.board).to eq(fresh_board)
+      expect(board.grid).to eq(fresh_board)
     end
 
     it 'works safely on already empty board' do
       expect { board.clear! }.not_to raise_error
-      expect(board.board).to eq(fresh_board)
+      expect(board.grid).to eq(fresh_board)
     end
   end
 
