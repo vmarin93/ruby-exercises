@@ -64,4 +64,89 @@ RSpec.describe UI do
       end
     end
   end
+
+  describe '#display_board' do
+    let(:input) { StringIO.new }
+    let(:board) { Board.new }
+
+    context 'when the board has no moves' do
+      let(:expected_board) do
+        <<~BOARD
+           1 | 2 | 3
+          ---+---+---
+           4 | 5 | 6
+          ---+---+---
+           7 | 8 | 9
+        BOARD
+      end
+
+      it 'displays a board with the positions of each cell' do
+        ui.display_board(board)
+
+        expect(output.string).to eq(expected_board)
+      end
+    end
+
+    context 'when the board has moves' do
+      let(:expected_board) do
+        <<~BOARD
+           1 | 2 | 3
+          ---+---+---
+           X | 5 | 6
+          ---+---+---
+           7 | 8 | O
+        BOARD
+      end
+
+      it 'displays a board that shows moves serialized in their respective cells' do
+        board.add_move(Move::X, 4)
+        board.add_move(Move::O, 9)
+        ui.display_board(board)
+
+        expect(output.string).to eq(expected_board)
+      end
+    end
+  end
+
+  describe '#display_players' do
+    let(:input) { StringIO.new }
+
+    context 'when the player names have same length' do
+      let(:player1) { Player.new(name: 'Player1', move: Move::X) }
+      let(:player2) { Player.new(name: 'Player2', move: Move::O) }
+      let(:expected_table) do
+        <<~TABLE
+          +---------------------+
+          | Player1 plays for X |
+          | Player2 plays for O |
+          +---------------------+
+        TABLE
+      end
+
+      it 'displays the expected table with correct padding and margins' do
+        ui.display_players(player1, player2)
+
+        expect(output.string).to eq(expected_table)
+      end
+    end
+
+    context 'when the player names have different lengths' do
+      let(:player1) { Player.new(name: 'Player12345', move: Move::X) }
+      let(:player2) { Player.new(name: 'Player2', move: Move::O) }
+      let(:expected_table) do
+        <<~TABLE
+          +-------------------------+
+          | Player12345 plays for X |
+          | Player2 plays for O     |
+          +-------------------------+
+        TABLE
+      end
+
+      it 'displays the expected table with correct padding and margins' do
+        ui.display_players(player1, player2)
+
+        expect(output.string).to eq(expected_table)
+      end
+    end
+  end
 end

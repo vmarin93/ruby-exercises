@@ -2,6 +2,9 @@
 # frozen_string_literal: true
 
 require 'stringio'
+require_relative 'board'
+require_relative 'player'
+require_relative 'move'
 
 # Defines the UI interface, has methods to interact with the user via STDIN and STDOUT
 class UI
@@ -39,6 +42,24 @@ class UI
 
       output.puts 'The only valid moves are either "x" or "o". Please choose a valid move!'
     end
+  end
+
+  sig { params(board: Board).void }
+  def display_board(board)
+    cells = board.grid.flatten.map.with_index(1) do |cell, position|
+      " #{cell ? cell.serialize : position} "
+    end
+    rows = cells.each_slice(3).map { |row| row.join('|').rstrip }
+    output.puts rows.join("\n---+---+---\n")
+  end
+
+  sig { params(player1: Player, player2: Player).void }
+  def display_players(player1, player2)
+    lines = [player1, player2].map { |player| "#{player.name} plays for #{player.move.serialize}" }
+    width = lines.map(&:length).max || 0
+    border = "+-#{'-' * width}-+"
+    body = lines.map { |line| "| #{line.ljust(width)} |" }
+    output.puts [border, *body, border]
   end
 
   private
