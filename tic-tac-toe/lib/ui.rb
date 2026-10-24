@@ -37,10 +37,10 @@ class UI
   def prompt_for_move(prompt)
     loop do
       output.puts prompt
-      move = Move.try_deserialize(T.must(input.gets).chomp.strip.downcase)
+      move = Move.try_deserialize(T.must(input.gets).chomp.strip.upcase)
       return move if move
 
-      output.puts 'The only valid moves are either "x" or "o". Please choose a valid move!'
+      output.puts 'The only valid moves are either "X" or "O". Please choose a valid move!'
     end
   end
 

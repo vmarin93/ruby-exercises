@@ -4,8 +4,8 @@
 # Defines all possible moves in the game as an enum. A move can either be X or O
 class Move < T::Enum
   enums do
-    X = new('x')
-    O = new('o')
+    X = new('X')
+    O = new('O')
   end
 
   sig { returns Move }
