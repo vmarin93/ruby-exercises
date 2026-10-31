@@ -2,7 +2,6 @@
 
 require_relative 'spec_helper'
 require_relative '../lib/ui'
-require_relative '../lib/move'
 
 RSpec.describe UI do
   let(:output) { StringIO.new }
@@ -62,6 +61,35 @@ RSpec.describe UI do
         expect(result).to eq(Move::X)
         expect(output.string).to include('Please choose a valid move!')
       end
+    end
+  end
+
+  describe '#prompt_for_position' do
+    context 'when given a numeric string' do
+      let(:input) { StringIO.new("5\n") }
+
+      it 'prints the prompt and returns the integer position' do
+        expect(ui.prompt_for_position("Bob's move")).to eq(5)
+        expect(output.string).to include("Bob's move")
+      end
+    end
+
+    context 'when given non-numeric input' do
+      let(:input) { StringIO.new("1abc\n") }
+
+      it 'returns 0 so board validation rejects it' do
+        expect(ui.prompt_for_position("Bob's move")).to eq(0)
+      end
+    end
+  end
+
+  describe '#display_message' do
+    let(:input) { StringIO.new }
+
+    it 'writes the message to output' do
+      ui.display_message('Game Over!')
+
+      expect(output.string).to eq("Game Over!\n")
     end
   end
 

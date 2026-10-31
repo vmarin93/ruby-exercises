@@ -44,6 +44,18 @@ class UI
     end
   end
 
+  sig { params(prompt: String).returns(Integer) }
+  def prompt_for_position(prompt)
+    output.puts prompt
+    raw_input = T.must(input.gets).strip
+    raw_input.match?(/\A\d+\z/) ? raw_input.to_i : 0
+  end
+
+  sig { params(message: String).void }
+  def display_message(message)
+    output.puts message
+  end
+
   sig { params(board: Board).void }
   def display_board(board)
     cells = board.grid.flatten.map.with_index(1) do |cell, position|
